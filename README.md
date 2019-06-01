@@ -4,7 +4,7 @@
 
 Let's take our example house with 10 IP cameras, Jeff our example person want's his home automation system to be able to recognise objects in the images and perform home automation actions within his home when certain objects are detected (a cat for example). main.sh starts a Yolo Darknet process on Jeff's Nvidia GPU and keeps it running ready to process images as they are fed from the 10 IP cameras in jpeg format.
 
-Please note you will need a Nvidia Cuda GPU with at least 4gb of memory to be able to run Yolov3 at the default 608 resolution. If you use a GPU with less memory you will need to decrease the resolution (and accept lower object recognition accuracy).
+Please note you will need a Nvidia Cuda GPU with at least 4gb of memory to be able to run Yolov3 at the default 608 resolution. If you use a GPU with less memory you will need to decrease the resolution (and accept lower object recognition accuracy). If you need a good single slot GPU I suggest looking at the Nvidia Quadro RTX 4000.
 <BR>
 <BR>
   
