@@ -72,7 +72,7 @@ echo "Problem with source or image, unable to process"
 else
 # Process image
 while grep -q "wait1" /tmp/darknet/darknetoutput ;do # Stopped or waiting for another job to finish
-sleep 0.1
+sleep $(echo 0.$(shuf -i100-150 -n1))
 done
 echo "wait1" >/tmp/darknet/darknetoutput
 if >/dev/null pgrep -f /opt/darknet/darknet; then
