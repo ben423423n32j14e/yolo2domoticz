@@ -6,8 +6,9 @@ Let's take our example house with 10 IP cameras, Jeff our example person want's 
 <BR>
 <BR>
 <BR>
-Scripts for integrating Yolo object recognition with Domoticz
-<BR>
+  
+#### Instructions:
+
 1) Install Yolo with Cuda support into /opt/darknet follow: https://pjreddie.com/darknet/yolo/
 2) apt-get install jpeginfo screen wget jq ffmpeg uuid sudo
 3) Check you can see the Nvidia card and Cuda version: nvidia-smi
