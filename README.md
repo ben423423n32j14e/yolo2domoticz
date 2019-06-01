@@ -5,6 +5,7 @@
 Let's take our example house with 10 IP cameras, Jeff our example person want's his home automation system to be able to recognise objects in the images and perform home automation actions within his home when certain objects are detected (a cat for example). main.sh starts a Yolo Darknet process on Jeff's Nvidia GPU and keeps it running ready to process images as they are fed from the 10 IP cameras.
 <BR>
 <BR>
+<BR>
 Scripts for integrating Yolo object recognition with Domoticz
 <BR>
 1) Install Yolo with Cuda support into /opt/darknet follow: https://pjreddie.com/darknet/yolo/
