@@ -16,16 +16,18 @@ if ! screen -list | grep -q "darknetwatchdog"; then
 echo "Starting darknetwatchdog..."
 sudo -u root /usr/bin/screen -S darknetwatchdog -d -m bash -c "while true; do sleep 60; if pgrep -fl $darknetpath/darknet | grep -Evq 'screen|bash'; then echo 'Darknet is already running'; \
 else echo 'Watchdog is attempting to restart Darknet...' ; sudo -u root /usr/bin/screen -S darknetrestart -d -m timeout 55 $darknetpath/main.sh 'start'; fi; \
-if (cat /tmp/darknet/darknetoutput | grep -q 'wait1'); then timesincemod=$(echo $(($(date +%s) - $(date +%s -r /tmp/darknet/darknetoutput)))); if (($timesincemod > 60)); then echo 'ready1' >/tmp/darknet/darknetoutput; fi; fi; sleep 5; done"
+if (cat /tmp/darknet/darknetoutput | grep -q 'wait1'); then timesincemod=$(echo $(($(date +%s) - $(date +%s -r /tmp/darknet/darknetoutput)))); if (($timesincemod > 60)); then echo 'ready1' >/tmp/darknet/darknetoutput; fi; fi; find /tmp/darknet/*.jpeg -mmin +1 -type f -delete; sleep 5; done"
 fi
 mkdir -p "/tmp/darknet"
+if ! grep -qs /tmp/darknet /proc/mounts; then
 mount -t tmpfs tmpfs /tmp/darknet >/dev/null 2>&1
+fi
 echo "wait1" >/tmp/darknet/darknetoutput
 rm -rf "$darknetpath/predictions.jpg"
 ln -sf "/tmp/darknet/predictions.jpg" "$darknetpath/predictions.jpg"
 sudo -u root /usr/bin/screen -S darknetbg -d -m ${darknetpath}/main.sh bgstart
 sleep 0.1
-while ! ( cat "/tmp/darknet/darknetoutput" | grep -q "Enter Image Path:" ) ;do
+until [[ $(cat "/tmp/darknet/darknetoutput" | grep "Enter Image Path:") == *"Enter Image Path:"* ]];do
 echo "Starting darknetbg..."
 sleep 3
 done
@@ -71,9 +73,8 @@ if [[ $(timeout 15 jpeginfo -c "/tmp/darknet/source{$uuid}.jpeg" | grep -E "WARN
 echo "Problem with source or image, unable to process"
 else
 # Process image
-while grep -q "wait1" /tmp/darknet/darknetoutput ;do
-echo "Stopped or waiting for another job to finish..."
-sleep 0.2
+while grep -q "wait1" /tmp/darknet/darknetoutput ;do # Stopped or waiting for another job to finish
+sleep 0.1
 done
 echo "wait1" >/tmp/darknet/darknetoutput
 if >/dev/null pgrep -f /opt/darknet/darknet; then
