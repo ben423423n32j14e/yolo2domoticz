@@ -16,6 +16,7 @@ Please note you will need a Nvidia Cuda GPU with at least 4gb of memory to be ab
 4) Copy main.sh into /opt/darknet
 
   
+  
 #### How to use main.sh:
 
 main.sh is the script that must be running on the host pc that contains the Nvidia graphics card, Cuda and Darknet software. When started the script starts an instance of Darknet on the Nvidia GPU and keeps it running ready to handle images and display the results.
