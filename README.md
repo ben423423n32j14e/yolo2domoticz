@@ -1,5 +1,5 @@
 # yolo2domoticz
-Scripts for integrating Yolo image recognition with Domoticz
+Scripts for integrating Yolo object recognition with Domoticz
 <BR>
 1) Install Yolo with Cuda support into /opt/darknet follow: https://pjreddie.com/darknet/yolo/
 2) apt-get install jpeginfo screen wget jq ffmpeg uuid sudo
