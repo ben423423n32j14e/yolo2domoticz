@@ -19,9 +19,7 @@ else echo 'Watchdog is attempting to restart Darknet...' ; sudo -u root /usr/bin
 if (cat /tmp/darknet/darknetoutput | grep -q 'wait1'); then timesincemod=$(echo $(($(date +%s) - $(date +%s -r /tmp/darknet/darknetoutput)))); if (($timesincemod > 60)); then echo 'ready1' >/tmp/darknet/darknetoutput; fi; fi; find /tmp/darknet/*.jpeg -mmin +1 -type f -delete; sleep 5; done"
 fi
 mkdir -p "/tmp/darknet"
-if ! grep -qs /tmp/darknet /proc/mounts; then
-mount -t tmpfs tmpfs /tmp/darknet >/dev/null 2>&1
-fi
+if ! grep -qs /tmp/darknet /proc/mounts; then mount -t tmpfs tmpfs /tmp/darknet >/dev/null 2>&1; fi
 echo "wait1" >/tmp/darknet/darknetoutput
 rm -rf "$darknetpath/predictions.jpg"
 ln -sf "/tmp/darknet/predictions.jpg" "$darknetpath/predictions.jpg"
