@@ -15,7 +15,6 @@ Please note you will need a Nvidia Cuda GPU with at least 4gb of memory to be ab
 3) Check you can see the Nvidia card and Cuda version: nvidia-smi
 4) Copy main.sh into /opt/darknet
 
-<BR>
   
 #### How to use main.sh:
 
