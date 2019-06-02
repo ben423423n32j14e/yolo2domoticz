@@ -3,7 +3,8 @@
 # Requirements: apt-get install jpeginfo screen wget jq ffmpeg uuid sudo
 
 # Configuration
-darknetpath="/opt/darknet"
+darknetpath='/opt/darknet'
+productionmode='no' # If set to yes the watchdog will automatically restart darknet if no data has been processed for 3 minutes (assumes an unknown fault has occured).
 
 # Other
 uuid=$(uuid)
@@ -11,13 +12,16 @@ uuid=$(uuid)
 # Start Darknet Screen session
 if [[ $1 == 'start' ]]; then
 sudo -u root /usr/bin/screen -ls darknetbg | grep -E '\s+[0-9]+\.' | awk -F ' ' '{print $1}' | while read x; do screen -XS $x quit; done
+
 # Start the watchdog (split multi-line)
 if ! screen -list | grep -q "darknetwatchdog"; then
 echo "Starting darknetwatchdog..."
 sudo -u root /usr/bin/screen -S darknetwatchdog -d -m bash -c "while true; do sleep 60; if pgrep -fl $darknetpath/darknet | grep -Evq 'screen|bash'; then echo 'Darknet is already running'; \
 else echo 'Watchdog is attempting to restart Darknet...' ; sudo -u root /usr/bin/screen -S darknetrestart -d -m timeout 55 $darknetpath/main.sh 'start'; fi; \
-if (cat /tmp/darknet/darknetoutput | grep -q 'wait1'); then timesincemod=$(echo $(($(date +%s) - $(date +%s -r /tmp/darknet/darknetoutput)))); if (($timesincemod > 60)); then echo 'ready1' >/tmp/darknet/darknetoutput; fi; fi; find /tmp/darknet/*.jpeg -mmin +1 -type f -delete; sleep 5; done"
+if (cat /tmp/darknet/darknetoutput | grep -q 'wait1'); then timesincemod=$(echo $(($(date +%s) - $(date +%s -r /tmp/darknet/darknetoutput)))); if (($timesincemod > 60)); then echo 'ready1' >/tmp/darknet/darknetoutput; fi; fi; \
+find /tmp/darknet/*.jpeg -mmin +1 -type f -delete ; if (echo $productionmode | grep -q 'yes'); then if (find /tmp/darknet/darknetoutput -mmin 1 -type f | grep -q '/tmp/darknet/darknetoutput'); then echo 'Darknet has not processed data within timeout attempting to restart...' ; sudo -u root /usr/bin/screen -S darknetrestart -d -m timeout 55 $darknetpath/main.sh 'start' ; fi; fi; done"
 fi
+
 mkdir -p "/tmp/darknet"
 if ! grep -qs /tmp/darknet /proc/mounts; then mount -t tmpfs tmpfs /tmp/darknet >/dev/null 2>&1; fi
 echo "wait1" >/tmp/darknet/darknetoutput
