@@ -19,7 +19,7 @@ echo "Starting darknetwatchdog..."
 sudo -u root /usr/bin/screen -S darknetwatchdog -d -m bash -c "while true; do sleep 60; if pgrep -fl $darknetpath/darknet | grep -Evq 'screen|bash'; then echo 'Darknet is already running'; \
 else echo 'Watchdog is attempting to restart Darknet...' ; sudo -u root /usr/bin/screen -S darknetrestart -d -m timeout 55 $darknetpath/main.sh 'start'; fi; \
 if (cat /tmp/darknet/darknetoutput | grep -q 'wait1'); then timesincemod=$(echo $(($(date +%s) - $(date +%s -r /tmp/darknet/darknetoutput)))); if (($timesincemod > 60)); then echo 'ready1' >/tmp/darknet/darknetoutput; fi; fi; \
-find /tmp/darknet/*.jpeg -mmin +1 -type f -delete ; if (echo $productionmode | grep -q 'yes'); then if (find /tmp/darknet/darknetoutput -mmin 1 -type f | grep -q '/tmp/darknet/darknetoutput'); then echo 'Darknet has not processed data within timeout attempting to restart...' ; sudo -u root /usr/bin/screen -S darknetrestart -d -m timeout 55 $darknetpath/main.sh 'start' ; fi; fi; done"
+find /tmp/darknet/*.jpeg -mmin +1 -type f -delete ; if (echo $productionmode | grep -q 'yes'); then if (find /tmp/darknet/darknetoutput -mmin +3 -type f | grep -q '/tmp/darknet/darknetoutput'); then echo 'Darknet has not processed data within timeout attempting to restart...' ; sudo -u root /usr/bin/screen -S darknetrestart -d -m timeout 55 $darknetpath/main.sh 'start' ; fi; fi; done"
 fi
 
 mkdir -p "/tmp/darknet"
