@@ -58,38 +58,11 @@ oven: 77%
 microwave: 56%
 ```
 
-#### Script to run main.sh automatically at startup:
-eg:
-<BR>
-nano /etc/init.d/mainsh
-<BR>
-chmod 755 /etc/init.d/mainsh
-<BR>
-update-rc.d mainsh defaults
-  
-```
-#!/bin/sh
-### BEGIN INIT INFO
-# Provides: mainsh
-# Required-Start: $network
-# Required-Stop: $network
-# Default-Start: 2 3 5
-# Default-Stop:
-# Description: Starts main.sh
-### END INIT INFO
+#### Setup main.sh to automatically at startup:
+Paste as a single command in terminal:
 
-case "$1" in
-'start')
-        sudo -u root /usr/bin/screen -S darknetstartup -d -m bash -c "/opt/darknet/main.sh start"
-        ;;
-'stop')
-        sudo -u root /opt/darknet/main.sh "stop"
-        ;;
-*)
-        echo "Usage: $0 { start | stop }"
-        ;;
-esac
-exit 0
+```
+cd /etc/init.d; wget https://raw.githubusercontent.com/ben423423n32j14e/yolo2domoticz/master/bin/mainsh; chmod 755 mainsh; update-rc.d mainsh defaults
 ```
 #### Using main.sh remotely over SSH:
 If you want to get at the data on the host running main.sh from another machine that's running for example Domoticz, apt-get install sshpass, login via ssh at least once manually to accept the certificate then you should be able to use a command similar to below:
