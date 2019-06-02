@@ -57,6 +57,7 @@ Predicted in 0.188455 seconds.
 oven: 77%
 microwave: 56%
 ```
+<BR>
 
 #### Set main.sh to run automatically at startup:
 Paste as a single command in terminal:
