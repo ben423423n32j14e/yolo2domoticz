@@ -31,6 +31,8 @@ main.sh is the script that must be running on the host pc that contains the Nvid
 ```
 /opt/darknet/main.sh "stop"
 ```
+<BR>
+  
 #### Process an image and display results in terminal
 <BR>
 Source: Synology Surveillance Station (number at the end is the camera number)
