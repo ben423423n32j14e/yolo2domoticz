@@ -58,12 +58,13 @@ oven: 77%
 microwave: 56%
 ```
 
-#### Setup main.sh to automatically at startup:
+#### Set main.sh to run automatically at startup:
 Paste as a single command in terminal:
 
 ```
 cd /etc/init.d; wget https://raw.githubusercontent.com/ben423423n32j14e/yolo2domoticz/master/bin/mainsh; chmod 755 mainsh; update-rc.d mainsh defaults
 ```
+
 #### Using main.sh remotely over SSH:
 If you want to get at the data on the host running main.sh from another machine that's running for example Domoticz, apt-get install sshpass, login via ssh at least once manually to accept the certificate then you should be able to use a command similar to below:
 
