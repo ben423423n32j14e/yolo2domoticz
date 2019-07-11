@@ -64,6 +64,7 @@ Source: Local file
 ```
 /opt/darknet/main.sh "local" "/pathtofile.jpeg"
 ```
+<BR>
 
 #### Sample terminal output:
 <BR>
