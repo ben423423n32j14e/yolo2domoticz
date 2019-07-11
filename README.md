@@ -54,6 +54,17 @@ Source: rtsp
 ```
 /opt/darknet/main.sh "process" "rtsp" "rtsp://username:password@192.168.0.126/onvif1"
 ```
+Source: Blue Iris
+  
+```
+/opt/darknet/main.sh "process" "blueiris" "https://192.168.0.120:443" "USERNAME" "PASSWORD" "CAMERASHORTNAME"
+```
+Source: Local file
+  
+```
+/opt/darknet/main.sh "local" "/pathtofile.jpeg"
+```
+
 #### Sample terminal output:
 <BR>
   
