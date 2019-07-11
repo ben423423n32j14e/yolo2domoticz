@@ -38,6 +38,7 @@ main.sh is the script that must be running on the host pc that contains the Nvid
   
 The script supports a wide range of image inputs including from some popular surveillance software, see below for examples:
 <BR>
+<BR>
 Source: Synology Surveillance Station (number at the end is the camera number)
   
 ```
